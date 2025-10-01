@@ -46,4 +46,11 @@ function renderCart() {
   cartTotal.textContent = `Total: $${total}`;
 }
 
+// Slider arrows
+function scrollSlider(direction) {
+  const slider = document.getElementById('product-slider');
+  const scrollAmount = 250; // pixels per click
+  slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}
+
 loadProducts();
