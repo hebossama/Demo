@@ -1,41 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping Cart Demo</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Store</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- Header -->
   <header>
     <h1>My Store</h1>
-    <button id="cartBtn">🛒 Cart (<span id="cartCount">0</span>)</button>
+    <button id="cart-btn" onclick="viewCart()">Cart (0)</button>
   </header>
 
-  <!-- Hero Banner -->
+  <!-- Hero Section -->
   <section class="hero">
-    <h2>Welcome to the Store</h2>
-    <p>Browse our products and add them to your cart</p>
-  </section>
-
-  <!-- Sliding Product Menu -->
-  <section class="product-slider">
-    <h2>Quick Picks</h2>
-    <div class="slider" id="slider"></div>
-  </section>
-
-  <!-- Cart Modal -->
-  <div id="cartModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Your Cart</h2>
-      <ul id="cartItems"></ul>
-      <p id="cartTotal">Total: $0</p>
-      <button id="checkoutBtn">Checkout</button>
+    <div class="hero-text">
+      <h2>Welcome to my Store</h2>
+      <p>Browse our best products </p>
     </div>
-  </div>
+  </section>
 
-  <script src="script.js"></script>
+  <!-- Product Section -->
+  <section class="products">
+    <h2>Quick Picks</h2>
+    <div id="product-list" class="product-container"></div>
+  </section>
+
+  <script src="main.js"></script>
 </body>
 </html>
+
