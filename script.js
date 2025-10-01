@@ -2,7 +2,7 @@
 fetch("products.json")
   .then(res => res.json())
   .then(data => {
-    const productList = document.getElementById("product-list");
+    const slider = document.getElementById("product-slider");
     data.forEach(product => {
       const div = document.createElement("div");
       div.className = "product";
@@ -12,7 +12,7 @@ fetch("products.json")
         <p>$${product.price}</p>
         <button onclick="addToCart(${product.id}, '${product.name}', ${product.price})">Add to Cart</button>
       `;
-      productList.appendChild(div);
+      slider.appendChild(div);
     });
   });
 
@@ -20,27 +20,56 @@ fetch("products.json")
 let cart = [];
 
 function addToCart(id, name, price) {
-  cart.push({id, name, price});
+  const existing = cart.find(item => item.id === id);
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cart.push({id, name, price, quantity: 1});
+  }
   updateCart();
 }
 
+function removeFromCart(id) {
+  cart = cart.filter(item => item.id !== id);
+  updateCart();
+}
+
+function changeQuantity(id, delta) {
+  const item = cart.find(p => p.id === id);
+  if (item) {
+    item.quantity += delta;
+    if (item.quantity <= 0) {
+      removeFromCart(id);
+    }
+    updateCart();
+  }
+}
+
 function updateCart() {
-  document.getElementById("cart-count").textContent = cart.length;
+  document.getElementById("cart-count").textContent = cart.reduce((sum, p) => sum + p.quantity, 0);
 
   const cartItems = document.getElementById("cart-items");
   cartItems.innerHTML = "";
   let total = 0;
   cart.forEach(item => {
     const li = document.createElement("li");
-    li.textContent = `${item.name} - $${item.price}`;
+    li.innerHTML = `
+      <span>${item.name} - $${item.price} x ${item.quantity}</span>
+      <div class="cart-controls">
+        <button onclick="changeQuantity(${item.id}, -1)">-</button>
+        <button onclick="changeQuantity(${item.id}, 1)">+</button>
+        <button onclick="removeFromCart(${item.id})">Remove</button>
+      </div>
+    `;
     cartItems.appendChild(li);
-    total += item.price;
+    total += item.price * item.quantity;
   });
   document.getElementById("cart-total").textContent = `Total: $${total}`;
 }
 
 // Sidebar toggle
-document.getElementById("cart-icon").addEventListener("click", () => {
+document.getElementById("cart-icon").addEventListener("click", (e) => {
+  e.preventDefault();
   document.getElementById("cart-sidebar").classList.toggle("active");
 });
 
