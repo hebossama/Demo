@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Dark Store</title>
+  <title>My Store</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -14,7 +14,7 @@
       <a href="#products">Products</a>
       <a href="#contact">Contact Us</a>
       <a href="#find">Find a Store</a>
-      <div id="cart-icon">🛒 <span id="cart-count">0</span></div>
+      <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
     </nav>
   </header>
 
@@ -27,7 +27,7 @@
   <!-- Products -->
   <section id="products" class="products-section">
     <h2>Products</h2>
-    <div id="product-list" class="product-list"></div>
+    <div id="product-slider" class="product-slider"></div>
   </section>
 
   <!-- Contact -->
@@ -44,7 +44,13 @@
   <!-- Find a Store -->
   <section id="find" class="find-section">
     <h2>Find a Store</h2>
-    <p>We are opening branches worldwide. Stay tuned!</p>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=New+York"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
   </section>
 
   <!-- Cart Sidebar -->
