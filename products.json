@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Tshirt",
+    "price": 15,
+    "image": "11.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Smart Coffe maker",
+    "price": 25,
+    "image": "12.jpg"
+  },
+  {
+    "id": 3,
+    "name": "buy our e-book!",
+    "price": 60,
+    "image": "13.jpg"
+  },
+  {
+    "id": 4,
+    "name": "wirless mouse",
+    "price": 30,
+    "image": "14.jpg"
+  },
+  {
+    "id": 5,
+    "name": "power bank",
+    "price": 15,
+    "image": "15.jpg"
+  }
+]
