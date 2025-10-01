@@ -3,9 +3,9 @@
   { "id": 2, "name": "Smart Coffee Maker", "price": 25, "image": "12.jpg" },
   { "id": 3, "name": "Buy our E-book!", "price": 60, "image": "13.jpg" },
   { "id": 4, "name": "Wireless Mouse", "price": 30, "image": "14.jpg" },
-  { "id": 5, "name": "Power Bank", "price": 15, "image": "15.jpg" },
-  { "id": 6, "name": "Cap", "price": 12, "image": "16.jpg" },
-  { "id": 7, "name": "Backpack", "price": 45, "image": "17.jpg" },
-  { "id": 8, "name": "USB Drive", "price": 10, "image": "18.jpg" },
-  { "id": 9, "name": "Water Bottle 1L", "price": 20, "image": "19.jpg" }
+  { "id": 5, "name": "Power Bank", "price": 15, "image": "15.png" },
+  { "id": 6, "name": "Cap", "price": 12, "image": "16.png" },
+  { "id": 7, "name": "Backpack", "price": 45, "image": "17.png" },
+  { "id": 8, "name": "USB Drive", "price": 10, "image": "18.png" },
+  { "id": 9, "name": "USB Drive Pro", "price": 20, "image": "19.png" }
 ]
