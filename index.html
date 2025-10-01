@@ -2,32 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Store</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Header -->
-  <header>
+  <!-- Navbar -->
+  <nav class="navbar">
     <h1>My Store</h1>
-    <button id="cart-btn" onclick="viewCart()">Cart (0)</button>
-  </header>
+    <button id="cart-btn">Cart (<span id="cart-count">0</span>)</button>
+  </nav>
 
   <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-text">
+  <header class="hero">
+    <div class="hero-content">
       <h2>Welcome to my Store</h2>
-      <p>Browse our best products </p>
+      <p>Browse our best products</p>
     </div>
-  </section>
+  </header>
 
-  <!-- Product Section -->
-  <section class="products">
+  <!-- Products Section -->
+  <section class="products-section">
     <h2>Quick Picks</h2>
-    <div id="product-list" class="product-container"></div>
+    <div id="products-container" class="products-container"></div>
   </section>
 
-  <script src="main.js"></script>
+  <!-- Cart Sidebar -->
+  <div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button id="close-cart">&times;</button>
+    </div>
+    <div id="cart-items"></div>
+    <div class="cart-footer">
+      <h3>Total: $<span id="cart-total">0</span></h3>
+      <button class="checkout-btn">Checkout</button>
+    </div>
+  </div>
+  <div id="cart-overlay" class="cart-overlay"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
