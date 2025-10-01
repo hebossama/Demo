@@ -7,26 +7,26 @@
   },
   {
     "id": 2,
-    "name": "Smart Coffe maker",
+    "name": "Smart Coffee Maker",
     "price": 25,
     "image": "12.jpg"
   },
   {
     "id": 3,
-    "name": "buy our e-book!",
+    "name": "Buy our E-book!",
     "price": 60,
     "image": "13.jpg"
   },
   {
     "id": 4,
-    "name": "wirless mouse",
+    "name": "Wireless Mouse",
     "price": 30,
     "image": "14.jpg"
   },
   {
     "id": 5,
-    "name": "power bank",
+    "name": "Power Bank",
     "price": 15,
-    "image": "15.jpg"
+    "image": "15.png"
   }
 ]
