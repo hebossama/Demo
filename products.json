@@ -7,5 +7,5 @@
   { "id": 6, "name": "Cap", "price": 12, "image": "16.png" },
   { "id": 7, "name": "Backpack", "price": 45, "image": "17.png" },
   { "id": 8, "name": "USB Drive", "price": 10, "image": "18.png" },
-  { "id": 9, "name": "USB Drive Pro", "price": 20, "image": "19.png" }
+  { "id": 9, "name": "Water Bottle", "price": 20, "image": "19.png" }
 ]
