@@ -1,72 +1,50 @@
-let cart = [];
-
 // Load products
 fetch("products.json")
   .then(res => res.json())
-  .then(products => {
-    const list = document.getElementById("product-list");
-    products.forEach(product => {
+  .then(data => {
+    const productList = document.getElementById("product-list");
+    data.forEach(product => {
       const div = document.createElement("div");
       div.className = "product";
       div.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>$${product.price}</p>
-        <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.image}')">
-          Add to Cart
-        </button>
+        <button onclick="addToCart(${product.id}, '${product.name}', ${product.price})">Add to Cart</button>
       `;
-      list.appendChild(div);
+      productList.appendChild(div);
     });
-  })
-  .catch(err => {
-    console.error("Error loading products.json", err);
   });
 
-// Add to Cart
-function addToCart(id, name, price, image) {
-  const existing = cart.find(item => item.id === id);
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({ id, name, price, image, qty: 1 });
-  }
+// Cart
+let cart = [];
+
+function addToCart(id, name, price) {
+  cart.push({id, name, price});
   updateCart();
 }
 
-// Update Cart
 function updateCart() {
-  document.getElementById("cart-count").innerText = cart.reduce((a, b) => a + b.qty, 0);
+  document.getElementById("cart-count").textContent = cart.length;
 
-  const items = document.getElementById("cart-items");
-  items.innerHTML = "";
+  const cartItems = document.getElementById("cart-items");
+  cartItems.innerHTML = "";
   let total = 0;
-
   cart.forEach(item => {
-    total += item.price * item.qty;
-    const div = document.createElement("div");
-    div.className = "cart-item";
-    div.innerHTML = `
-      <img src="${item.image}" alt="${item.name}">
-      <div>
-        <p>${item.name}</p>
-        <p>$${item.price} x ${item.qty}</p>
-      </div>
-      <button onclick="removeFromCart(${item.id})">❌</button>
-    `;
-    items.appendChild(div);
+    const li = document.createElement("li");
+    li.textContent = `${item.name} - $${item.price}`;
+    cartItems.appendChild(li);
+    total += item.price;
   });
-
-  document.getElementById("cart-total").innerText = total;
+  document.getElementById("cart-total").textContent = `Total: $${total}`;
 }
 
-// Remove from Cart
-function removeFromCart(id) {
-  cart = cart.filter(item => item.id !== id);
-  updateCart();
-}
+// Sidebar toggle
+document.getElementById("cart-icon").addEventListener("click", () => {
+  document.getElementById("cart-sidebar").classList.toggle("active");
+});
 
-// Toggle Cart Sidebar
-function toggleCart() {
-  document.getElementById("cart-sidebar").classList.toggle("open");
-}
+// Checkout
+document.getElementById("checkout-btn").addEventListener("click", () => {
+  alert("Checkout not implemented yet!");
+});
