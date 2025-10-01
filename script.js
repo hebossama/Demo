@@ -1,56 +1,69 @@
 let cart = [];
 
-// Load Products
-async function loadProducts() {
-  const res = await fetch('products.json');
-  const products = await res.json();
-  const container = document.getElementById('product-slider');
-
-  products.forEach(p => {
-    const div = document.createElement('div');
-    div.className = 'product';
-    div.innerHTML = `
-      <img src="${p.image}" alt="${p.name}">
-      <h3>${p.name}</h3>
-      <p>$${p.price}</p>
-      <button onclick="addToCart(${p.id}, '${p.name}', ${p.price})">Add to Cart</button>
-    `;
-    container.appendChild(div);
+// Load products
+fetch("products.json")
+  .then(res => res.json())
+  .then(products => {
+    const list = document.getElementById("product-list");
+    products.forEach(product => {
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>$${product.price}</p>
+        <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.image}')">
+          Add to Cart
+        </button>
+      `;
+      list.appendChild(div);
+    });
   });
-}
 
 // Add to Cart
-function addToCart(id, name, price) {
-  cart.push({ id, name, price });
-  document.getElementById('cart-count').textContent = cart.length;
-  renderCart();
+function addToCart(id, name, price, image) {
+  const existing = cart.find(item => item.id === id);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ id, name, price, image, qty: 1 });
+  }
+  updateCart();
 }
 
-// Toggle Cart
-function toggleCart() {
-  document.getElementById('cart').classList.toggle('hidden');
-}
-
-// Render Cart
-function renderCart() {
-  const cartItems = document.getElementById('cart-items');
-  const cartTotal = document.getElementById('cart-total');
-  cartItems.innerHTML = '';
-
+// Update Cart
+function updateCart() {
+  document.getElementById("cart-count").innerText = cart.reduce((a, b) => a + b.qty, 0);
+  
+  const items = document.getElementById("cart-items");
+  items.innerHTML = "";
   let total = 0;
+
   cart.forEach(item => {
-    total += item.price;
-    cartItems.innerHTML += `<p>${item.name} - $${item.price}</p>`;
+    total += item.price * item.qty;
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <img src="${item.image}" alt="${item.name}">
+      <div>
+        <p>${item.name}</p>
+        <p>$${item.price} x ${item.qty}</p>
+      </div>
+      <button onclick="removeFromCart(${item.id})">❌</button>
+    `;
+    items.appendChild(div);
   });
 
-  cartTotal.textContent = `Total: $${total}`;
+  document.getElementById("cart-total").innerText = total;
 }
 
-// Slider arrows
-function scrollSlider(direction) {
-  const slider = document.getElementById('product-slider');
-  const scrollAmount = 250; // pixels per click
-  slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+// Remove from Cart
+function removeFromCart(id) {
+  cart = cart.filter(item => item.id !== id);
+  updateCart();
 }
 
-loadProducts();
+// Toggle Cart Sidebar
+function toggleCart() {
+  document.getElementById("cart-sidebar").classList.toggle("open");
+}
