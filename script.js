@@ -1,76 +1,49 @@
 let cart = [];
 
-// Load products.json
-fetch("products.json")
-  .then(res => res.json())
-  .then(products => {
-    const container = document.getElementById("products-container");
-    products.forEach(product => {
-      const div = document.createElement("div");
-      div.className = "product-card";
-      div.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>$${product.price}</p>
-        <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.image}')">Add to Cart</button>
-      `;
-      container.appendChild(div);
-    });
-  });
+// Load Products
+async function loadProducts() {
+  const res = await fetch('products.json');
+  const products = await res.json();
+  const container = document.getElementById('product-slider');
 
-// Add to cart
-function addToCart(id, name, price, image) {
-  const existing = cart.find(item => item.id === id);
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({ id, name, price, image, qty: 1 });
-  }
-  updateCart();
+  products.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'product';
+    div.innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <h3>${p.name}</h3>
+      <p>$${p.price}</p>
+      <button onclick="addToCart(${p.id}, '${p.name}', ${p.price})">Add to Cart</button>
+    `;
+    container.appendChild(div);
+  });
 }
 
-// Update cart
-function updateCart() {
-  document.getElementById("cart-count").innerText = cart.reduce((a, c) => a + c.qty, 0);
+// Add to Cart
+function addToCart(id, name, price) {
+  cart.push({ id, name, price });
+  document.getElementById('cart-count').textContent = cart.length;
+  renderCart();
+}
 
-  const cartItems = document.getElementById("cart-items");
-  cartItems.innerHTML = "";
+// Toggle Cart
+function toggleCart() {
+  document.getElementById('cart').classList.toggle('hidden');
+}
+
+// Render Cart
+function renderCart() {
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+  cartItems.innerHTML = '';
 
   let total = 0;
   cart.forEach(item => {
-    total += item.price * item.qty;
-    const div = document.createElement("div");
-    div.className = "cart-item";
-    div.innerHTML = `
-      <img src="${item.image}" alt="${item.name}">
-      <div>
-        <h4>${item.name}</h4>
-        <p>$${item.price} x ${item.qty}</p>
-      </div>
-    `;
-    cartItems.appendChild(div);
+    total += item.price;
+    cartItems.innerHTML += `<p>${item.name} - $${item.price}</p>`;
   });
 
-  document.getElementById("cart-total").innerText = total;
+  cartTotal.textContent = `Total: $${total}`;
 }
 
-// Cart sidebar toggle
-const cartBtn = document.getElementById("cart-btn");
-const cartSidebar = document.getElementById("cart-sidebar");
-const cartOverlay = document.getElementById("cart-overlay");
-const closeCart = document.getElementById("close-cart");
-
-cartBtn.addEventListener("click", () => {
-  cartSidebar.classList.add("active");
-  cartOverlay.classList.add("active");
-});
-
-closeCart.addEventListener("click", () => {
-  cartSidebar.classList.remove("active");
-  cartOverlay.classList.remove("active");
-});
-
-cartOverlay.addEventListener("click", () => {
-  cartSidebar.classList.remove("active");
-  cartOverlay.classList.remove("active");
-});
+loadProducts();
