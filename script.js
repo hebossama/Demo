@@ -18,6 +18,9 @@ fetch("products.json")
       `;
       list.appendChild(div);
     });
+  })
+  .catch(err => {
+    console.error("Error loading products.json", err);
   });
 
 // Add to Cart
@@ -34,7 +37,7 @@ function addToCart(id, name, price, image) {
 // Update Cart
 function updateCart() {
   document.getElementById("cart-count").innerText = cart.reduce((a, b) => a + b.qty, 0);
-  
+
   const items = document.getElementById("cart-items");
   items.innerHTML = "";
   let total = 0;
