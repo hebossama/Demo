@@ -30,7 +30,7 @@ let mongoose = null;
 if (useMongo) {
   mongoose = require('mongoose');
   mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(()=>console.log('Connected to MongoDB'))
+    .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error', err));
 
   const OrderSchema = new mongoose.Schema({
@@ -84,7 +84,6 @@ app.post('/checkout', async (req, res) => {
     let aiMessage = null;
     if (process.env.OPENAI_API_KEY) {
       try {
-        // minimal REST call to OpenAI Chat completions (example)
         const prompt = `Create a short friendly order confirmation message for an order total $${total} with ${items.length} items.`;
         const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
@@ -93,7 +92,7 @@ app.post('/checkout', async (req, res) => {
             'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
           },
           body: JSON.stringify({
-            model: "gpt-4o-mini", // replace with a model you have access to or use "gpt-4o" or "gpt-4o-mini"
+            model: "gpt-4o-mini",
             messages: [{ role: 'user', content: prompt }],
             max_tokens: 150
           })
@@ -114,6 +113,19 @@ app.post('/checkout', async (req, res) => {
 
 // Optional: get orders (admin)
 app.get('/orders', async (req, res) => {
-  if (useMongo && OrdersModel) {
-    const list = await OrdersModel.find().sort({
+  try {
+    if (useMongo && OrdersModel) {
+      const list = await OrdersModel.find().sort({ createdAt: -1 });
+      res.json(list);
+    } else {
+      res.json(ORDERS);
+    }
+  } catch (err) {
+    console.error('Orders fetch error', err);
+    res.status(500).json({ error: 'orders_failed', details: err.message });
+  }
+});
 
+// --- Start server ---
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
