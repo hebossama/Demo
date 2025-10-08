@@ -1,5 +1,7 @@
-// Load products
-fetch("products.json")
+const BACKEND_URL = "https://demo-7g3i.onrender.com"; 
+
+// Load products from backend
+fetch(`${BACKEND_URL}/products`)
   .then(res => res.json())
   .then(data => {
     const slider = document.getElementById("product-slider");
@@ -14,7 +16,8 @@ fetch("products.json")
       `;
       slider.appendChild(div);
     });
-  });
+  })
+  .catch(err => console.error("Failed to load products:", err));
 
 // Cart
 let cart = [];
@@ -24,7 +27,7 @@ function addToCart(id, name, price) {
   if (existing) {
     existing.quantity++;
   } else {
-    cart.push({id, name, price, quantity: 1});
+    cart.push({ id, name, price, quantity: 1 });
   }
   updateCart();
 }
@@ -74,6 +77,35 @@ document.getElementById("cart-icon").addEventListener("click", (e) => {
 });
 
 // Checkout
-document.getElementById("checkout-btn").addEventListener("click", () => {
-  alert("Checkout not implemented yet!");
+document.getElementById("checkout-btn").addEventListener("click", async () => {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  const customer = {
+    name: prompt("Enter your name:"),
+    email: prompt("Enter your email:")
+  };
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/checkout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: cart, customer })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      alert(`Order successful!\nAI Message: ${data.aiMessage || "No AI message"}`);
+      cart = [];
+      updateCart();
+    } else {
+      alert("Checkout failed. See console for details.");
+      console.error(data);
+    }
+  } catch (err) {
+    console.error("Checkout error:", err);
+    alert("Checkout failed. See console.");
+  }
 });
