@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Store</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>My Store</h1>
+    <nav>
+      <a href="#products">Products</a>
+      <a href="#contact">Contact Us</a>
+      <a href="#find">Find a Store</a>
+      <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>Welcome to My Store</h2>
+    <p>Shop the latest tech and lifestyle products</p>
+  </section>
+
+  <!-- Products -->
+  <section id="products" class="products-section">
+    <h2>Products</h2>
+    <div id="product-slider" class="product-slider"></div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact-section">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required/>
+      <input type="email" placeholder="Your Email" required/>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <!-- Find a Store -->
+  <section id="find" class="find-section">
+    <h2>Find a Store</h2>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=New+York"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- Cart Sidebar -->
+  <div id="cart-sidebar" class="cart-sidebar">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <div id="cart-total">Total: $0</div>
+    <button id="checkout-btn">Checkout</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
